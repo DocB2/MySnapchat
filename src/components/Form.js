@@ -1,13 +1,47 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Keyboard } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Keyboard } from 'react-native';
+import axios from 'axios'
 
 import {Actions} from 'react-native-router-flux';
 
 export default class Form extends Component {
 
-    constructor(props){
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+      }
+      
+      home(){
+          Actions.home()
+      }
+
+      
+      saveData = () => {
+        fetch('http://10.18.207.147:27043/api/user', {
+            method: 'POST',
+            headers: { 
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json' 
+                     },
+            body: JSON.stringify({email: this.state.email, password: this.state.password})
+          })
+          .then((response) => response.json())
+          .then((responseData) => { console.log("response: " + responseData); })
+          .catch((err) => { console.log(err); });
+          
+          
+        }
+
+
+
+
+
+   /* constructor(props){
         super(props);
         this.state={
+            login: '',
             email:'',
             password: ''
         }
@@ -17,22 +51,34 @@ export default class Form extends Component {
         Actions.home()
     }
 
-    saveData =async()=>{
-        const {email,password} = this.state;
+    saveData = async() => {
+
+    
+
+        const {login, email,password} = this.state;
 
         //save data with asyncstorage
         let loginDetails={
+            login: login,
             email: email,
             password: password
         }
 
         if(this.props.type !== 'Login')
         {
-            AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
-
-            Keyboard.dismiss();
-            alert("Vous êtes inscrit(e)!. Email: " + email + ' password: ' + password);
-            this.login();
+            return fetch('https://10.18.207.147:27043/api/user', {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({  
+                    login: this.state.login,
+                  email: this.state.email,
+                  password: this.state.password,
+                }),
+              });
+            
         }
         else if(this.props.type == 'Login')
         {
@@ -59,6 +105,7 @@ export default class Form extends Component {
                 alert(error);
             }
         }
+        console.log (login, email, password)
     }
 
     showData = async()=>{
@@ -66,35 +113,45 @@ export default class Form extends Component {
         let ld = JSON.parse(loginDetails);
         alert('email: '+ ld.email + ' ' + 'password: ' + ld.password);
     }
-
+*/
     render() {
         return(
+             <ScrollView>
             <View style={styles.container}>
-                <TextInput style={styles.inputBox}
+
+          <TextInput style={styles.inputBox}
                 onChangeText={(email) => this.setState({email})}
+                value={this.state.text}
                 underlineColorAndroid='rgba(0,0,0,0)' 
                 placeholder="Email"
                 placeholderTextColor = "#002f6c"
                 selectionColor="#fff"
                 keyboardType="email-address"
                 onSubmitEditing={()=> this.password.focus()}/>
+
+                
                 
                 <TextInput style={styles.inputBox}
                 onChangeText={(password) => this.setState({password})} 
+                value={this.state.text}
                 underlineColorAndroid='rgba(0,0,0,0)' 
                 placeholder="Password"
                 secureTextEntry={true}
                 placeholderTextColor = "#002f6c"
                 ref={(input) => this.password = input}
                 />
-                <View>
-                <TouchableOpacity onPress={this.cook} style={styles.button}> 
-                    <Text style={styles.buttonText} onPress={this.saveData}>{this.props.type}</Text>
-                    
-                </TouchableOpacity>
-                </View>
+                
+                <TouchableOpacity style={styles.button} onPress={this.saveData}> 
+                    <Text style={styles.buttonText} >{this.props.type}</Text>
+                </TouchableOpacity>  
+
+                <TouchableOpacity style={styles.button} onPress={this.home}> 
+                    <Text style={styles.buttonText} >Mode Test</Text>
+                </TouchableOpacity>    
+                
+             
             </View>
-            
+           </ScrollView>
         )
     }
 }

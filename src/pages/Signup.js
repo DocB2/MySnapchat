@@ -26,6 +26,7 @@ export default class Signup extends Component {
                 />
                 <Text>{'\n'}</Text>
                 <Text>{'\n'}</Text>
+                <Text>{'\n'}</Text>
                 <Form type="Signup"/>
                 <View style={styles.signupTextCont}> 
                     <Text style={styles.signupText}>Tu as déjà un compte?! </Text>

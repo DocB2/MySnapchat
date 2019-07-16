@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   View,
   StatusBar
 } from 'react-native';
 
 
-
-import Search from './src/components/Search'
 
 import Routes from './src/Routes';
 
@@ -37,4 +34,3 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('MyCamera', () => MyCamera);

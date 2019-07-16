@@ -7,8 +7,6 @@ import Form from '../components/Form';
 
 export default class Login extends Component {
 
-
-
     signup() {
         Actions.signup()
     }
@@ -16,6 +14,7 @@ export default class Login extends Component {
     render() {
         return(
                 <View style={styles.container}>
+
                 <Image
                     style={styles.stretch}
                     source={require('../img/MySnapchat_logo.png')}

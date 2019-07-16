@@ -8,6 +8,7 @@ import Home from './pages/Home';
 
 
 
+
 export default class Routes extends Component {
     render() {
         return (
@@ -17,6 +18,8 @@ export default class Routes extends Component {
                 titleStyle={{color: '#000000',}}
             >
                 <Stack key="root">
+
+                
                 <Scene key="login" component={Login} title="Login"/>
                 <Scene key="signup" component={Signup} title="Sign up"/>
                 <Scene key="home" component={Home} title="Home"/>
